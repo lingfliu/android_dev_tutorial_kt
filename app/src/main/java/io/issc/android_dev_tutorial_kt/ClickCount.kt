@@ -5,12 +5,12 @@ import androidx.databinding.Bindable
 
 class ClickCount(cnt:Int):BaseObservable() {
 
-    @get:Bindable
     var cnt:String = cnt.toString()
-    set(cnt) {
-        field = cnt
-//        notifyChange()
-    }
+        @Bindable get() = field
+        set(cnt) {
+            field = cnt
+            notifyChange()
+        }
 
     init {
 //        this.cnt = cnt
