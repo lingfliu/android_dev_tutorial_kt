@@ -6,12 +6,13 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import io.issc.android_dev_tutorial_kt.databinding.ActivityMainBinding
+import io.issc.android_dev_tutorial_kt.databinding.ActivitySimpleComponentBinding
 import java.util.concurrent.Future
 import kotlin.random.Random
 
 
-class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+class SimpleComponentActivity : AppCompatActivity() {
+    lateinit var binding: ActivitySimpleComponentBinding
     lateinit var txt: TextView
     lateinit var btn: Button
     var clickCount = ClickCount(1)
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivitySimpleComponentBinding.inflate(layoutInflater)
         setContentView(binding.root)
         txt = binding.txt
         btn = binding.btn
