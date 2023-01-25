@@ -63,9 +63,14 @@ class SimpleComponentActivity : AppCompatActivity() {
         })
 
         binding.radios.setOnCheckedChangeListener(object :OnCheckedChangeListener{
-            override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
+            override fun onCheckedChanged(p0: RadioGroup?, id: Int) {
 //                TODO("Not yet implemented")
-                Log.d("simple", "selected ${d}".format(p1))
+                if (id == R.id.radio_1) {
+                    Log.d("simple", "selected option 1")
+                }
+                else if (id == R.id.radio_2) {
+                    Log.d("simple", "selected option 2")
+                }
             }
         })
     }
