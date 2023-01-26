@@ -11,6 +11,13 @@ class CoordinateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCoordinateBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val bar = binding.bar
+
+        val listView = binding.listView
+
+        listView.adapter =
+
    }
 
 }

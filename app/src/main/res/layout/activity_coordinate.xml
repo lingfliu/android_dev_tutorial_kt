@@ -13,28 +13,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".CoordinateActivity">
-        <androidx.core.widget.NestedScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_height="match_parent">
+           <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.google.android.material.appbar.AppBarLayout
-                    android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/bar"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@color/orange"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/bar"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
+                    android:src="@mipmap/ic_launcher_round"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"/>
+            </com.google.android.material.appbar.AppBarLayout>
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:id="@+id/scroll"
+                app:layout_constraintTop_toBottomOf="@id/bar">
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/list_view"
-                    app:layout_constraintTop_toBottomOf="@+id/bar"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
+                    android:id="@+id/list_view"/>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 
 </layout>
