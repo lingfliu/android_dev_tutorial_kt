@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">android_dev_tutorial_kt</string>
+    <string name="info_shown">测试文字</string>
 </resources>
