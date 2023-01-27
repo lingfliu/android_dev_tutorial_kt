@@ -1,6 +1,7 @@
 package io.issc.android_dev_tutorial_kt
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.graphics.Bitmap
 import android.media.Image
 import android.media.ImageReader
@@ -22,6 +23,12 @@ class IconTextView: ConstraintLayout {
     }
     constructor(context:Context, attr:AttributeSet?):super(context, attr) {
         LayoutInflater.from(context).inflate(R.layout.widget_icontext, this)
+        val ta = context.obtainStyledAttributes(attr, R.styleable.IconTextView)
+
+        findViewById<TextView>(R.id.title).text = ta.getString(R.styleable.IconTextView_title)
+        findViewById<ImageView>(R.id.icon).setImageDrawable(ResourcesCompat.getDrawable(resources, ta.getResourceId(R.styleable.IconTextView_iconSrc, R.mipmap.ic_launcher), null))
+
+        ta.recycle()
     }
     constructor(context: Context, attr: AttributeSet?, @AttrRes defStylAttr: Int):super(context, attr, defStylAttr) {
         LayoutInflater.from(context).inflate(R.layout.widget_icontext, this)
