@@ -31,6 +31,9 @@ import java.util.concurrent.Future
 import kotlin.random.Random
 
 
+/**
+ * 自定义View示例
+ */
 class CustomViewActivity : AppCompatActivity() {
     lateinit var binding: ActivityCustomViewBinding
 
@@ -71,7 +74,6 @@ class CustomViewActivity : AppCompatActivity() {
 //        arcView.setOnClickListener{
 //            anime.start()
 //        }
-
 
     }
 }
