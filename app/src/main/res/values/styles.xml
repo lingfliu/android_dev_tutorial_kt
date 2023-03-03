@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MainText">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="backgroundTint">@color/material_dynamic_tertiary90</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <style name="MainButton">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="backgroundTint">@color/orange</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+</resources>
