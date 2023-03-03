@@ -15,6 +15,9 @@ class MainActivity : AppCompatActivity() {
     var coroutineTester = CoroutineTester()
     var idx = 0
 
+    var kbSensor = KbSensor(1, "sensor1", "model1", "description1")
+
+
     //Handler callback示例
     val handler = Handler(Looper.getMainLooper(), {
         Log.d("main", it.arg1.toString() + " " + (it.obj as Bundle).getString("str"))
@@ -27,8 +30,22 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        txt = this.findViewById(R.id.txt)
 
+
+        kbSensor.value = 1.0
+
+        var itest = object:ITest {
+            override fun onCall(event: String) {
+                Log.d("interface test", event)
+            }
+
+            override fun onReturn(event: String): String {
+                Log.d("interface test", event)
+                return event
+            }
+        }
+
+        txt = this.findViewById(R.id.txt)
 
         //Handler 示例 Message传输
         txt.setOnClickListener({
