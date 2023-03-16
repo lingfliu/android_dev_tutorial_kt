@@ -22,11 +22,7 @@
 
         <activity android:name=".SimpleComponentActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".PagerActivity"
@@ -37,7 +33,11 @@
         </activity>
         <activity android:name=".ComplexComponentActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".CustomViewActivity"
             android:exported="true">

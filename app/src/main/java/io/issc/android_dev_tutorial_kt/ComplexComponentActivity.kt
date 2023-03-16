@@ -1,15 +1,20 @@
 package io.issc.android_dev_tutorial_kt
 
+import android.content.Context
+import android.content.DialogInterface
+import android.content.DialogInterface.OnClickListener
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.appcompat.app.AlertDialog
 import io.issc.android_dev_tutorial_kt.databinding.ActivityComplexComponentBinding
 
 
@@ -40,8 +45,18 @@ class ComplexComponentActivity : AppCompatActivity() {
             }
         }
 
-        webView = binding.web
+        var dialogBuilder = AlertDialog.Builder(this)
 
+//        dialogBuilder.setNegativeButton("Cancel", DialogInterface.OnClickListener{dialogInterface, i->
+//            dialogInterface.dismiss()
+//        }).create().show()
+
+        var layout = layoutInflater.inflate(R.layout.dialog_add_contact, null)
+
+        dialogBuilder.setView(layout).create().show()
+
+
+        webView = binding.web
         //添加client保持在webview内部渲染页面
         webView.webViewClient = object:WebViewClient(){
             override fun onPageFinished(view: WebView?, url: String?) {

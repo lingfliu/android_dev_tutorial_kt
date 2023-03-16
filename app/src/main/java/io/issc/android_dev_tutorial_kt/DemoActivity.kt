@@ -27,7 +27,7 @@ class DemoActivity: AppCompatActivity() {
 //        btn = findViewById(R.id.btn_select)
 
         binding = ActivityDemoBinding.inflate(layoutInflater)
-        cnt = binding.cnt
+//        cnt = binding.cnt
         btn = binding.btnSelect
         txt = binding.txtCnt
         switch = binding.switchBtn
