@@ -46,6 +46,8 @@ class CoordinateActivity : AppCompatActivity() {
         listView.adapter = listAdapter
         listView.layoutManager = LinearLayoutManager(this, VERTICAL, false)
 
+        listAdapter.notifyDataSetChanged()
+
         dataMock()
         listAdapter.opListener = object:OnOpListener{
             override fun onRemove(data: Contact) {

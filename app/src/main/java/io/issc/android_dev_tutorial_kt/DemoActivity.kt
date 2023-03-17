@@ -29,6 +29,11 @@ class DemoActivity: AppCompatActivity() {
         binding = ActivityDemoBinding.inflate(layoutInflater)
 //        cnt = binding.cnt
         btn = binding.btnSelect
+
+        btn.setOnClickListener{
+
+        }
+
         txt = binding.txtCnt
         switch = binding.switchBtn
         switch.setOnCheckedChangeListener{p0, checked->

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.RadioGroup
 import android.widget.RadioGroup.OnCheckedChangeListener
 import android.widget.SeekBar
@@ -20,6 +21,8 @@ class SimpleComponentActivity : AppCompatActivity() {
     lateinit var binding: ActivitySimpleComponentBinding
     lateinit var txt: TextView
     lateinit var btn: Button
+    lateinit var seekBar:SeekBar
+    lateinit var img:ImageView
     var clickCount = ClickCount(1)
 
     val taskResultList = ArrayList<Future<Any>>()
@@ -30,15 +33,18 @@ class SimpleComponentActivity : AppCompatActivity() {
         setContentView(binding.root)
         txt = binding.txt
         btn = binding.btn
+
+        img = binding.img
+        seekBar = binding.seekbar
         binding.clickCount = clickCount
 
         btn.setOnClickListener {
             clickCount.cnt = (clickCount.cnt.toInt()+1).toString()
         }
 
-        binding.seekbar.setOnSeekBarChangeListener(object:OnSeekBarChangeListener{
-            override fun onProgressChanged(v: SeekBar?, progress: Int, fromUser: Boolean) {
-                Log.d("simple", progress.toString())
+        seekBar.setOnSeekBarChangeListener(object:OnSeekBarChangeListener{
+            override fun onProgressChanged(v: SeekBar?, p: Int, fromUser: Boolean) {
+//                Log.d("simple", progress.toString())
             }
 
             override fun onStartTrackingTouch(v: SeekBar?) {

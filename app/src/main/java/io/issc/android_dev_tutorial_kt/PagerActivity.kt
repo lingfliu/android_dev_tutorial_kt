@@ -38,7 +38,7 @@ class PagerActivity : FragmentActivity() {
 
         pager.adapter = object : FragmentStateAdapter(this) {
            override fun getItemCount(): Int {
-               return 3
+               return 4
             }
             override fun createFragment(position: Int): Fragment {
                 if (position == 0) {
