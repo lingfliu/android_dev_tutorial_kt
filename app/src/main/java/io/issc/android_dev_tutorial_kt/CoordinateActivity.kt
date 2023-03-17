@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -30,6 +31,8 @@ class CoordinateActivity : AppCompatActivity() {
 
     lateinit var btnAdd:FloatingActionButton
 
+    lateinit var img:ImageView
+
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +40,17 @@ class CoordinateActivity : AppCompatActivity() {
         binding = ActivityCoordinateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        img = binding.img
+
+        img.setOnClickListener{
+            var dialogBuilder = AlertDialog.Builder(applicationContext)
+
+            dialogBuilder.setTitle("跳转确认")
+                .setMessage("确认跳转么？")
+
+            dialogBuilder.create().show()
+
+        }
         val bar = binding.bar
 
         val listView = binding.listView

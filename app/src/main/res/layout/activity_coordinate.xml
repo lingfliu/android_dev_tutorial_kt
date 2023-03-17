@@ -39,6 +39,7 @@
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.2"
+                    android:id="@+id/img"
                     />
                 <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"

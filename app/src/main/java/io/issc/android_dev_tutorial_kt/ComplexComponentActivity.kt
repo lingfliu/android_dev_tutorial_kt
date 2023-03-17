@@ -24,6 +24,7 @@ class ComplexComponentActivity : AppCompatActivity() {
     lateinit var spinner:Spinner
     lateinit var webView: WebView
     var selectList = ArrayList<String>()
+    var dialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,14 +47,33 @@ class ComplexComponentActivity : AppCompatActivity() {
         }
 
         var dialogBuilder = AlertDialog.Builder(this)
+//        dialogBuilder.setTitle("跳转确认")
+//            .setMessage("确认跳转么？")
+//            .setNegativeButton("取消", DialogInterface.OnClickListener{dialogInterface, i ->
+//                dialogInterface.dismiss()
+//            })
+//            .setPositiveButton("确认", DialogInterface.OnClickListener{dialogInterface, i ->
+//               dialogInterface.dismiss()
+//            })
+//            .create().show()
 
 //        dialogBuilder.setNegativeButton("Cancel", DialogInterface.OnClickListener{dialogInterface, i->
 //            dialogInterface.dismiss()
 //        }).create().show()
 
         var layout = layoutInflater.inflate(R.layout.dialog_add_contact, null)
-
-        dialogBuilder.setView(layout).create().show()
+        var btn = layout.findViewById<Button>(R.id.btn_confirm)
+        btn.setOnClickListener{
+            var name = layout.findViewById<EditText>(R.id.input_name).text.toString()
+            var num = layout.findViewById<EditText>(R.id.input_num).text.toString()
+        }
+        var btnCancel =layout.findViewById<Button>(R.id.btn_cancel)
+        btnCancel.setOnClickListener{
+           //TODO: dismiss dialog
+            dialog?.dismiss()
+        }
+        dialog = dialogBuilder.setView(layout).create()
+        dialog?.show()
 
 
         webView = binding.web
