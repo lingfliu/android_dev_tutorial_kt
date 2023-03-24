@@ -10,7 +10,8 @@
         android:label="FrgNav1" >
         <action
             android:id="@+id/action_frgNav1_to_frgNav2"
-            app:destination="@id/frgNav2" />
+            app:destination="@id/frgNav2"
+            app:enterAnim="@anim/nav_default_enter_anim" />
         <action
             android:id="@+id/action_frgNav1_to_frgNav3"
             app:destination="@id/frgNav3" />
@@ -18,9 +19,25 @@
     <fragment
         android:id="@+id/frgNav2"
         android:name="io.issc.android_dev_tutorial_kt.FrgNav2"
-        android:label="FrgNav2" />
+        android:label="FrgNav2" >
+        <action
+            android:id="@+id/action_frgNav2_to_frgNav1"
+            app:destination="@id/frgNav1" />
+        <action
+            android:id="@+id/action_frgNav2_to_frgNav3"
+            app:destination="@id/frgNav3" />
+    </fragment>
     <fragment
         android:id="@+id/frgNav3"
         android:name="io.issc.android_dev_tutorial_kt.FrgNav3"
-        android:label="FrgNav3" />
+        android:label="FrgNav3" >
+        <action
+            android:id="@+id/action_frgNav3_to_frgNav1"
+            app:destination="@id/frgNav1"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_frgNav3_to_frgNav2"
+            app:destination="@id/frgNav2" />
+    </fragment>
 </navigation>

@@ -39,21 +39,26 @@
         </activity>
         <activity android:name=".CustomViewActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".IoActivity"
             android:exported="true">
         </activity>
         <activity android:name=".NaviActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity android:name=".CalledActivity"
             android:exported="true">
 
         </activity>
