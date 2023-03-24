@@ -28,6 +28,7 @@ class ArcView(context: Context, attr: AttributeSet?) : View(context, attr) {
         paint = Paint()
         paint.color = Color.parseColor("#643122")
         paint.strokeWidth = 3.0f
+        paint.isAntiAlias = true
 
         val ta = context.obtainStyledAttributes(attr, R.styleable.ArcView)
         startAngle = ta.getFloat(R.styleable.ArcView_startAngle, 0.0f)

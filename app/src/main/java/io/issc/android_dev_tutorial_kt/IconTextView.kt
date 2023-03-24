@@ -15,8 +15,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import org.w3c.dom.Text
 
+/**
+ * 基于layout的复合自定义组件
+ */
 class IconTextView: ConstraintLayout {
 
+    //TODO: 二次回调对内部的交互事件向外透传
 
     constructor(context:Context):super(context) {
         LayoutInflater.from(context).inflate(R.layout.widget_icontext, this)

@@ -26,23 +26,25 @@ class FrgNav2 : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentNav2Binding.inflate(layoutInflater)
-
-        arguments.let {
-            val msg = it?.getString("key")
-            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-        }
+//
+//        arguments.let {
+//            val msg = it?.getString("key")
+//            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+//        }
 
         btn1 = binding.btnNav1
         btn2 = binding.btnNav2
         btn3 = binding.btnNav3
 
         btn2.setOnClickListener{
-            Toast.makeText(context, "Already in Page 1", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Already in Page 2", Toast.LENGTH_SHORT).show()
         }
 
         btn1.setOnClickListener{
             val controller = findNavController()
-            controller.navigate(R.id.action_frgNav2_to_frgNav1)
+            val bundle = Bundle()
+            bundle.putString("key", "Hello from Page 2")
+            controller.navigate(R.id.action_frgNav2_to_frgNav1, bundle)
         }
 
         btn3.setOnClickListener{

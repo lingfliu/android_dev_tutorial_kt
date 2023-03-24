@@ -25,7 +25,7 @@ import kotlin.random.Random
 
 class NaviActivity : FragmentActivity() {
     lateinit var binding: ActivityNaviBinding
-    var cnt = 0
+    var cnt = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,8 +85,22 @@ class NaviActivity : FragmentActivity() {
             var intent = Intent(this, CalledActivity::class.java)
             intent.putExtra("cnt", cnt)
             caller.launch(intent)
+//            startActivity(intent)
+//            startActivityForResult(intent, 1)
         }
 
     }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == 1){}
+//        else if (requestCode == 2) {}
+////        ...
+//
+//        if (requestCode == 1 && resultCode == 1) {
+//            val data: Int = data?.getIntExtra("cnt", 0) ?: 0
+//            Toast.makeText(this, "cnt = $data", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
 }
