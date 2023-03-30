@@ -49,6 +49,7 @@ class ServiceActivity : AppCompatActivity() {
     lateinit var btnService:Button
 
     val coroutineTester = CoroutineTester()
+    val threadPool = ThreadPool.getInstance()
 
     override fun onPause() {
         super.onPause()
@@ -77,13 +78,14 @@ class ServiceActivity : AppCompatActivity() {
                     val binder = service as MainService.MainBinder
                     val mainService = binder.getService()
 
-                    Thread {
-                        val result = mainService.task()
-                    }.start()
+                    //用线程池调用task
+//                    threadPool.submit{
+//                        val result = mainService.task()
+//                    }
 
                     //用协程调用task
                     coroutineTester.submit{
-                        mainService.task()
+                        val result = mainService.task()
                     }
                 }
 
