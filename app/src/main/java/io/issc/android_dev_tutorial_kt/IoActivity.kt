@@ -1,6 +1,7 @@
 package io.issc.android_dev_tutorial_kt
 
 import android.animation.ObjectAnimator
+import android.content.pm.PackageManager.PERMISSION_DENIED
 import android.graphics.Bitmap
 import android.media.MediaPlayer
 import android.media.MediaPlayer.OnPreparedListener
@@ -17,6 +18,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
@@ -47,21 +49,42 @@ import kotlin.random.Random
  */
 class IoActivity : AppCompatActivity() {
     lateinit var binding: ActivityIoBinding
-    lateinit var txtTitle:TextView
-    lateinit var txtInfo:TextView
-    lateinit var btnAdd:FloatingActionButton
-    lateinit var listView:RecyclerView
+    lateinit var btn:Button
 
     val coroutineTester = CoroutineTester()
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Log.i("ioacti", "onRequestPermissionsResult"+grantResults[0].toString())
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityIoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        txtTitle = binding.title
-        txtInfo = binding.info
-        btnAdd = binding.btnAction
-        listView = binding.listView
+        btn = binding.btn
+
+        btn.setOnClickListener{
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_DENIED) {
+                requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+            }
+
+            //file r/w demo
+            val extDir = applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.absolutePath
+            val file = File(extDir, "test.json")
+            if (!file.exists()) {
+                file.createNewFile()
+                file.writeBytes("test".toByteArray())
+            }
+            else {
+                val str = file.readBytes().toString()
+                Log.d("ioacti", ""+str)
+            }
+
+        }
 
 
         //preferences demo
@@ -70,26 +93,18 @@ class IoActivity : AppCompatActivity() {
         preferences.edit().putString("title", "Io Demo App").apply()
         preferences.edit().putString("info", "Sharedpreference").apply()
 
-        //file r/w demo
-        val extDir = applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.absolutePath
-        val file = File(extDir, "test.json")
-        if (!file.exists()) {
-            file.createNewFile()
-            file.writeBytes("test".toByteArray())
-        }
-        else {
-            val str = file.readBytes().toString()
-            Log.d("toacti", str)
-        }
 
         //room demo
         val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "user_info").allowMainThreadQueries().fallbackToDestructiveMigration().build()
         val userInfoDao = db.userInfoDao()
+
 
         Thread({
             userInfoDao.save(UserInfo(null, "admin", "admin", "admin"))
             val uinfo = userInfoDao.findByName("admin")
             Log.d("IoActivity", "user info: " + uinfo.name)
         }).start()
+
+
     }
 }

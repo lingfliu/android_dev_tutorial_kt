@@ -9,65 +9,24 @@
             type="io.issc.android_dev_tutorial_kt.ClickCount" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/wrapper"
         tools:context=".CoordinateActivity">
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/bar"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/orange">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/title"
-                android:text="Title"
-                android:textSize="24sp"
-                android:layout_gravity="left"
-                android:layout_marginLeft="8dp"
-                />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/info"
-                android:text="Info"
-                android:textSize="24sp"
-                android:layout_marginLeft="8dp"
-                />
-        </com.google.android.material.appbar.AppBarLayout>
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/scroll"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            >
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:paddingTop="8dp"
-                    android:id="@+id/list_view"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="32dp"
-            app:fabSize="auto"
-            android:src="@mipmap/ic_launcher_round"
-            android:id="@+id/btn_action"
-            app:layout_anchor="@id/scroll"
-            app:layout_anchorGravity="bottom|right"
-            android:contentDescription="Add" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:backgroundTint="@color/orange"
+        android:textSize="28sp"
+        android:text="Test"
+        android:id="@+id/btn"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
