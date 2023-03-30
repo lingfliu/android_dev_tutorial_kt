@@ -50,6 +50,14 @@ class ServiceActivity : AppCompatActivity() {
 
     val coroutineTester = CoroutineTester()
 
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityServiceBinding.inflate(layoutInflater)
@@ -61,20 +69,29 @@ class ServiceActivity : AppCompatActivity() {
             intent.putExtra("data", "hello service")
 
             //启动服务
-//            startService(intent)
+            startService(intent)
 
             //绑定服务
             val serviceConnection = object:ServiceConnection{
                 override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
                     val binder = service as MainService.MainBinder
                     val mainService = binder.getService()
-                    mainService.task()
+
+                    Thread {
+                        val result = mainService.task()
+                    }.start()
+
+                    //用协程调用task
+                    coroutineTester.submit{
+                        mainService.task()
+                    }
                 }
 
                 override fun onServiceDisconnected(name: ComponentName?) {
                     Log.i("MainServiceConnection", "onServiceDisconnected")
                 }
             }
+
             bindService(intent, serviceConnection, BIND_AUTO_CREATE)
         }
     }

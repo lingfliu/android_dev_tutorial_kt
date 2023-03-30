@@ -23,8 +23,9 @@ class MainService : Service() {
         return MainBinder()
     }
 
-    fun task() {
+    fun task():String {
         Log.i("MainService", "task")
+        return "result"
     }
 
     internal inner class MainBinder : Binder() {
