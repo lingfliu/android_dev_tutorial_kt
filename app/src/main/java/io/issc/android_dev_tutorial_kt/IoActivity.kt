@@ -90,12 +90,19 @@ class IoActivity : AppCompatActivity() {
         //preferences demo
         var preferences = getSharedPreferences("io.issc.android_dev_tutorial_kt", MODE_PRIVATE)
 
+        val isFirstOpen = preferences.getBoolean("isFirstOpen", true)
+        if (isFirstOpen) {
+            preferences.edit().putBoolean("isFirstOpen", false).apply()
+        }
+
         preferences.edit().putString("title", "Io Demo App").apply()
         preferences.edit().putString("info", "Sharedpreference").apply()
 
-
         //room demo
-        val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "user_info").allowMainThreadQueries().fallbackToDestructiveMigration().build()
+        val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "user_info")
+            .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
+            .build()
         val userInfoDao = db.userInfoDao()
 
 
