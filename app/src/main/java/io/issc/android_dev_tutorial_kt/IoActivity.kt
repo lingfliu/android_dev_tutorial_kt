@@ -65,7 +65,7 @@ class IoActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.i("ioacti", "onRequestPermissionsResult"+grantResults[0].toString())
+        Log.i("ioacti", "onRequestPermissionsResult"+ " " + grantResults[0].toString())
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,68 +75,24 @@ class IoActivity : AppCompatActivity() {
 
         btn.setOnClickListener{
 
-            //get请求demo
-//            runBlocking {
-//                HttpClient(Android).use {
-//                    val response = it.get<String>("https://www.baidu.com")
-//                    Log.d("ioacti", response)
-//                }
-//            }
-
-            //restful get 请求demo
-//            runBlocking {
-//                HttpClient(Android){
-//                    install(io.ktor.client.features.json.JsonFeature){
-//                        serializer = io.ktor.client.features.json.GsonSerializer{
-//                            serializeNulls()
-//                            disableHtmlEscaping()
-//                        }
-//                    }
-//                }
-//                    .use {
-//                        val response = it.get<MessageBundle<List<ProjectInfo>>>("http://plaf.kingroad.com:8059/api/pdb/project/info/all")
-//                        Log.d("ioacti", response.message.toString())
-//                    }
-//            }
-
-            //restful post 请求demo
-            runBlocking {
-                HttpClient(Android){
-                    defaultRequest {
-                        header("Content-Type", "application/json")
-                    }
-
-                    install(io.ktor.client.features.json.JsonFeature){
-                        serializer = io.ktor.client.features.json.GsonSerializer{
-                            serializeNulls()
-                            disableHtmlEscaping()
-                        }
-                    }
-                }
-                    .use {
-                        val response = it.post<MessageBundle<ProjectInfoExt>>("http://plaf.kingroad.com:8059/api/pdb/project/ext/info/update"){
-                            body = ProjectInfoExt("1480853307463585800", 12.00000, 12.0000 )
-                        }
-                        Log.d("ioacti", response.message.toString())
-                    }
-            }
-
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_DENIED) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_DENIED) {
                 requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
             }
+//
+//            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_DENIED) {
+//                requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+//            }
 
             //file r/w demo
+            applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.absolutePath
             val extDir = applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.absolutePath
-            val file = File(extDir, "test.json")
+            val file = File(extDir, "test3.json")
             if (!file.exists()) {
                 file.createNewFile()
-                file.writeBytes("test".toByteArray())
             }
-            else {
-                val str = file.readBytes().toString()
-                Log.d("ioacti", ""+str)
-            }
-
+            file.writeBytes("test 1234".toByteArray())
+            val str = file.readLines()[0]
+            Log.d("ioacti", ""+str)
         }
 
 
@@ -158,9 +114,9 @@ class IoActivity : AppCompatActivity() {
             .build()
         val userInfoDao = db.userInfoDao()
 
-
         Thread({
             userInfoDao.save(UserInfo(null, "admin", "admin", "admin"))
+            userInfoDao.update(UserInfo(1, "admin", "admin", "admin"))
             val uinfo = userInfoDao.findByName("admin")
             Log.d("IoActivity", "user info: " + uinfo.name)
         }).start()
