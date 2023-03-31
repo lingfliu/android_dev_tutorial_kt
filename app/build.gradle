@@ -72,4 +72,7 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
     // Jetpack Compose Integration
     implementation "androidx.navigation:navigation-compose:$nav_version"
+
+    implementation "io.ktor:ktor-client-android:1.6.6"
+    implementation "io.ktor:ktor-client-gson:1.6.6"
 }

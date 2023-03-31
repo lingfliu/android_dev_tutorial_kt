@@ -37,8 +37,14 @@ import io.issc.android_dev_tutorial_kt.databinding.ActivityIoBinding
 import io.issc.android_dev_tutorial_kt.databinding.ActivityMainBinding
 import io.issc.android_dev_tutorial_kt.databinding.ActivityPagerBinding
 import io.issc.android_dev_tutorial_kt.databinding.ActivitySimpleComponentBinding
-import io.issc.android_dev_tutorial_kt.model.AppDatabase
-import io.issc.android_dev_tutorial_kt.model.UserInfo
+import io.issc.android_dev_tutorial_kt.model.*
+import io.ktor.client.*
+import io.ktor.client.engine.android.*
+import io.ktor.client.features.*
+import io.ktor.client.request.*
+import io.ktor.client.utils.EmptyContent.headers
+import io.ktor.http.*
+import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.util.concurrent.Future
 import kotlin.random.Random
@@ -68,6 +74,53 @@ class IoActivity : AppCompatActivity() {
         btn = binding.btn
 
         btn.setOnClickListener{
+
+            //get请求demo
+//            runBlocking {
+//                HttpClient(Android).use {
+//                    val response = it.get<String>("https://www.baidu.com")
+//                    Log.d("ioacti", response)
+//                }
+//            }
+
+            //restful get 请求demo
+//            runBlocking {
+//                HttpClient(Android){
+//                    install(io.ktor.client.features.json.JsonFeature){
+//                        serializer = io.ktor.client.features.json.GsonSerializer{
+//                            serializeNulls()
+//                            disableHtmlEscaping()
+//                        }
+//                    }
+//                }
+//                    .use {
+//                        val response = it.get<MessageBundle<List<ProjectInfo>>>("http://plaf.kingroad.com:8059/api/pdb/project/info/all")
+//                        Log.d("ioacti", response.message.toString())
+//                    }
+//            }
+
+            //restful post 请求demo
+            runBlocking {
+                HttpClient(Android){
+                    defaultRequest {
+                        header("Content-Type", "application/json")
+                    }
+
+                    install(io.ktor.client.features.json.JsonFeature){
+                        serializer = io.ktor.client.features.json.GsonSerializer{
+                            serializeNulls()
+                            disableHtmlEscaping()
+                        }
+                    }
+                }
+                    .use {
+                        val response = it.post<MessageBundle<ProjectInfoExt>>("http://plaf.kingroad.com:8059/api/pdb/project/ext/info/update"){
+                            body = ProjectInfoExt("1480853307463585800", 12.00000, 12.0000 )
+                        }
+                        Log.d("ioacti", response.message.toString())
+                    }
+            }
+
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_DENIED) {
                 requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
             }

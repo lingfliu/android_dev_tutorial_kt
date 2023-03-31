@@ -7,6 +7,26 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 class CoroutineTester:ViewModel() {
+
+    interface Task{
+        suspend fun run();
+    }
+
+    fun submit(task:Task) {
+        viewModelScope.launch(Dispatchers.IO){
+            flow {
+                for (i in 1..10) {
+                    emit(i)
+                }
+            }
+                .collect{
+                    Log.i("flow collect", it.toString())
+                }
+
+            task.run()
+        }
+    }
+
     fun submit(runnable: Runnable){
         viewModelScope.launch(Dispatchers.IO){ withContext(Dispatchers.IO){ runnable.run() }}
     }
