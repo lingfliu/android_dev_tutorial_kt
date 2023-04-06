@@ -75,4 +75,10 @@ dependencies {
 
     implementation "io.ktor:ktor-client-android:1.6.6"
     implementation "io.ktor:ktor-client-gson:1.6.6"
+
+    implementation "androidx.camera:camera-core:1.2.2"
+    implementation "androidx.camera:camera-camera2:1.2.2"
+    implementation "androidx.camera:camera-lifecycle:1.2.2"
+    implementation "androidx.camera:camera-extensions:1.2.2"
+    implementation "androidx.camera:camera-view:1.2.2"
 }
