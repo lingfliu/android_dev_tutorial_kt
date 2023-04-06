@@ -1,7 +1,10 @@
 package io.issc.android_dev_tutorial_kt
 
+import android.content.Context
 import android.content.ContextParams
 import android.graphics.Bitmap
+import android.hardware.Sensor.TYPE_ALL
+import android.hardware.SensorManager
 import android.hardware.camera2.CameraMetadata.LENS_FACING_BACK
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -36,7 +39,9 @@ class CamActivity : AppCompatActivity() {
     lateinit var btnShoot: Button
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
 
-//    var cam: androidx.camera.core.Camera? = null
+
+    private lateinit var sensorMgr:SensorManager
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -54,8 +59,11 @@ class CamActivity : AppCompatActivity() {
         viewFinder = binding.preview
         btnShoot = binding.btnShoot
 
-        requestPermissions(arrayOf(android.Manifest.permission.CAMERA), 0)
+        sensorMgr  = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
+        var sensorList = sensorMgr.getSensorList(TYPE_ALL)
+
+        requestPermissions(arrayOf(android.Manifest.permission.CAMERA), 0)
 
         cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
@@ -68,9 +76,12 @@ class CamActivity : AppCompatActivity() {
     }
 
     fun bindPreview(cameraProvider: ProcessCameraProvider) {
-        val preview = Preview.Builder().build()
-        val imageCapture = ImageCapture.Builder().build()
-        val imageAnalysis = ImageAnalysis.Builder().build()
+        val preview = Preview.Builder()
+            .build()
+        val imageCapture = ImageCapture.Builder()
+            .build()
+        val imageAnalysis = ImageAnalysis.Builder()
+            .build()
         var cameraSelector = CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT).build()
         preview.setSurfaceProvider(viewFinder.surfaceProvider)
 //        var camera = cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview)
