@@ -7,7 +7,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.hardware.Sensor
-import android.hardware.Sensor.TYPE_ALL
+import android.hardware.Sensor.*
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
@@ -55,6 +55,7 @@ class SenseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivitySenseBinding.inflate(layoutInflater)
         setContentView(binding.root)
         btn = binding.btnToCam
@@ -62,16 +63,29 @@ class SenseActivity : AppCompatActivity() {
         sensorList = binding.sensorList
 
         sensorMgr = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
         sensors = sensorMgr.getSensorList(TYPE_ALL)
+        val accSensor = sensorMgr.getDefaultSensor(TYPE_ACCELEROMETER)
+
         sensorMgr.registerListener(object:SensorEventListener{
             override fun onSensorChanged(event: SensorEvent?) {
-                Log.i("senseacti", "value " + event?.values)
+                Log.i("senseacti", "value " + event?.values?.get(0).toString())
             }
 
             override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
                 Log.i("senseacti", "acc changed " + p1.toString())
             }
-        }, sensors.get(0), SensorManager.SENSOR_DELAY_NORMAL)
+        }, accSensor, SensorManager.SENSOR_DELAY_NORMAL)
+//
+//        sensorMgr.registerListener(object:SensorEventListener{
+//            override fun onSensorChanged(event: SensorEvent?) {
+//                Log.i("senseacti", "value " + event?.values)
+//            }
+//
+//            override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+//                Log.i("senseacti", "acc changed " + p1.toString())
+//            }
+//        }, sensors.get(0), SensorManager.SENSOR_DELAY_NORMAL)
         val adapter =  SensorListAdapter(sensors)
         sensorList.adapter = adapter
         sensorList.layoutManager = LinearLayoutManager(this, VERTICAL, false)

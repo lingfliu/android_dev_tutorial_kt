@@ -63,6 +63,7 @@ class CamActivity : AppCompatActivity() {
 
         var sensorList = sensorMgr.getSensorList(TYPE_ALL)
 
+        //必须在onCreate中调用，否则权限请求会被忽略
         requestPermissions(arrayOf(android.Manifest.permission.CAMERA), 0)
 
         cameraProviderFuture = ProcessCameraProvider.getInstance(this)
@@ -82,7 +83,9 @@ class CamActivity : AppCompatActivity() {
             .build()
         val imageAnalysis = ImageAnalysis.Builder()
             .build()
-        var cameraSelector = CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT).build()
+        var cameraSelector = CameraSelector.Builder()
+            .requireLensFacing(CameraSelector.LENS_FACING_FRONT )
+            .build()
         preview.setSurfaceProvider(viewFinder.surfaceProvider)
 //        var camera = cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview)
         var camera = cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, imageCapture,
