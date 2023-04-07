@@ -22,6 +22,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import io.issc.android_dev_tutorial_kt.databinding.ActivityIoBinding
 import io.issc.android_dev_tutorial_kt.databinding.ActivitySenseBinding
 import io.issc.android_dev_tutorial_kt.model.MessageBundle
@@ -92,18 +96,19 @@ class SenseActivity : AppCompatActivity() {
 
     }
 
+    class TestWorker(appContext: Context, workParams:WorkerParameters)
+        :Worker(appContext, workParams) {
+        override fun doWork(): Result {
+            return Result.success()
+        }
+    }
+
     override fun onResume() {
         super.onResume()
 
-//        sensorMgr.registerListener(object:SensorEventListener{
-//            override fun onSensorChanged(event: SensorEvent?) {
-//                TODO("Not yet implemented")
-//            }
-//
-//            override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
-//                TODO("Not yet implemented")
-//            }
-//        }, sensors.get(0), SensorManager.SENSOR_DELAY_NORMAL)
+        val workRequest = OneTimeWorkRequestBuilder<TestWorker>().build()
 
+        val workMgr = WorkManager.getInstance(applicationContext)
+        workMgr.enqueue(workRequest)
     }
 }

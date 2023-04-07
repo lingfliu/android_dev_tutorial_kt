@@ -81,4 +81,10 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:1.2.2"
     implementation "androidx.camera:camera-extensions:1.2.2"
     implementation "androidx.camera:camera-view:1.2.2"
+
+    def work_version = "2.8.1"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    implementation "androidx.work:work-gcm:$work_version"
+    implementation "androidx.work:work-multiprocess:$work_version"
+
 }
