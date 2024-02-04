@@ -15,3 +15,10 @@ dependencyResolutionManagement {
 rootProject.name = "android_dev_tutorial_kt"
 include ':app'
 include ':kotlin-basics'
+include ':mod_layout'
+include ':mod_ui'
+include ':mod_customview'
+include ':mod_listview'
+include ':mod_navi'
+include ':mod_io'
+include ':mod_comm'
