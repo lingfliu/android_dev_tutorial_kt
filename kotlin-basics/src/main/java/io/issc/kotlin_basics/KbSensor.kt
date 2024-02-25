@@ -8,9 +8,9 @@ class KbSensor(code: Int, name:String) : BaseType(code, name) {
     constructor(code:Int, name:String, model:String) : this(code, name) {
         this.model = model
 
-        var sensor = KbSensor(1, "sensor1", "model1", "description1")
+        val sensor = KbSensor(1, "sensor1", "model1", "description1")
 
-        sensor?.value = 1.0
+        sensor.value = 1.0
     }
 
     constructor(code:Int, name:String, model:String, description:String) : this(code, name, model) {

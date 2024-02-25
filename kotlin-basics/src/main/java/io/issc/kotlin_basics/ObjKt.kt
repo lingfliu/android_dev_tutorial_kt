@@ -1,27 +1,44 @@
 package io.issc.kotlin_basics
 
-class ObjKt(name:String, value:Double): BaseType, ListenerK {
+class ObjKt(name:String, value:Double): ListenerK {
     var name:String = name
     var value:Double = value
 
+    //可空变量
     var status:Int?
 
+    var listener:ListenerK? = null
+
+    fun setListener(listener: () -> Unit) {
+        this.listener = listener
+    }
+
+    //延迟初始化
     lateinit var info:String
+
+    constructor(name:String, status:Int):this(name, 0.0) {
+        this.status = status
+    }
 
     init {
         status = 1
+
     }
+
+
 
     //委托模式
     constructor(name:String):this(name, 0.0)
 
-    fun print() {
-        var obj = ObjKt("Hello")
-        var obj2 = ObjKt("Hello", 2)
-
+    fun demo() {
+        /*
+         *  这里展示了java与kotlin之间的互操作
+         * */
+        var objJava = ObjJava("java")
+        var res = objJava.test()
+        var objKt = ObjKt("Hello")
+        var objjava2 = ObjJava("Hello", 2.0)
         info = "hello"
-
-        println("name: $name, value: $value info: $info")
     }
 
     fun loop() {
