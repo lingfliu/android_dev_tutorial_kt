@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import io.issc.kotlin_basics.databinding.ActivityMainBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.*
 import java.lang.System.currentTimeMillis
@@ -27,7 +28,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.obj.x = 1
+        binding.txt.OnClickListener = View.OnClickListener {
+            Log.d("interface test", "click")
+        }
+
 
         //3 循环 控制
         for (i in 1..10) {
