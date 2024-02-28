@@ -1,34 +1,30 @@
 package io.issc.kotlin_basics
 
-class ObjKt(name:String, value:Double): ListenerK {
-    var name:String = name
-    var value:Double = value
+//继承类
+class ObjKt(name:String, x:Int, id:String): BaseType(name, x), ListenerK {
+    var id = id
 
     //可空变量
     var status:Int?
 
-    var listener:ListenerK? = null
+    //lateinit
+    lateinit var listener:ListenerK
 
-    fun setListener(listener: () -> Unit) {
-        this.listener = listener
-    }
 
     //延迟初始化
     lateinit var info:String
 
-    constructor(name:String, status:Int):this(name, 0.0) {
-        this.status = status
+    //第二构造函数
+    constructor(name:String, x:Int):this(name, x, "0") {
+        status = 0
     }
 
     init {
         status = 1
-
     }
 
-
-
-    //委托模式
-    constructor(name:String):this(name, 0.0)
+    //委托模式构造函数
+    constructor(name:String):this(name, 1, "1")
 
     fun demo() {
         /*
@@ -50,7 +46,8 @@ class ObjKt(name:String, value:Double): ListenerK {
             println("i: $i")
         }
     }
-    override fun onEvent(event: ObjKt) {
+
+    override fun onEvent(msg: String, t: Long) {
         TODO("Not yet implemented")
     }
 }

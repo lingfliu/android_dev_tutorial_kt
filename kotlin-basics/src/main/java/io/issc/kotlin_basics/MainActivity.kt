@@ -11,28 +11,69 @@ import kotlinx.coroutines.*
 import java.lang.System.currentTimeMillis
 
 class MainActivity : AppCompatActivity() {
+    /*kotlin 基础代码示例*/
     // controlling examples
 
-    val threadPool = ThreadPool.getInstance()
-    var coroutineTester = CoroutineTester()
-    var idx = 0
+    //1 自动推导变量
+    var x = 1
+    val y = 2
 
-    var kbSensor = KbSensor(1, "sensor1", "model1", "description1")
+    var list = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10) //定长列表
+    var varList = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10) //可变列表
 
+    //2 可空变量
+    var str:String?= "hello"
 
-    //Handler callback示例
-    val handler = Handler(Looper.getMainLooper(), {
-        Log.d("main", it.arg1.toString() + " " + (it.obj as Bundle).getString("str"))
-        false })
-
-    lateinit var txt:View
-
-    var cnt = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //3 循环 控制
+        for (i in 1..10) {
+            Log.d("loop test", i.toString())
+        }
+
+        //kotlin 没有switch语句，但可以使用标签和continue 跳转
+        switch@ for (i in 1..10) {
+            if (i == 5) {
+                continue@switch
+            }
+            Log.d("switch test", i.toString())
+        }
+
+        //4 let, also, with: 用于缩减空指针判断
+        str?.let {
+            Log.d("nullable test", it)
+        }
+
+        str?.also { Log.d("nullable test", it) }
+
+        with(str) {
+            this?.let { Log.d("nullable test", it) }
+        }
+
+        //5 is 类型判断
+        if (str is String) {
+            str?.let { Log.d("is test", it) }
+        }
+
+        //6 异常
+        try {
+            throw Exception("test")
+        } catch (e: Exception) {
+            e.message?.let { Log.d("exception test", it) }
+        }
+
+        //7 类与对象
+        val obj = ObjKt("name", 1, "id")
+        obj.id.let { Log.d("object test", it) }
+
+        //8 lambda 算子
+        var lambda = { x: Int, y: Int -> x + y }
+        lambda(1, 2).let { Log.d("lambda test", it.toString()) }
+
+        //9 协程
         GlobalScope.launch {
             var x : Int = 1 //有初始化时Int可省略
 
@@ -55,19 +96,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        //lambda example
-        val lambdaTest = { x: Int, y: Int -> x + y }
-        Log.d("lambda test", lambdaTest(1, 2).toString())
-
-        //See
-        val objKt = ObjKt("name")
-        objKt.setListener {
-            Log.d("interface test", "name")
-        }
-
-
-//        kbSensor.value = 1.0
-//
 //        var itest = object:ITest {
 //            override fun onCall(event: String) {
 //                Log.d("interface test", event)
@@ -79,7 +107,11 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 //
-//        txt = this.findViewById(R.id.txt)
+        //lambda 表达式
+        var txt = findViewById<View>(R.id.txt)
+        txt.setOnClickListener(View.OnClickListener {
+            Log.d("interface test", "click")
+        })
 //
 //        //Handler 示例 Message传输
 //        txt.setOnClickListener({
