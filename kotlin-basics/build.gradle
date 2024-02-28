@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+apply plugin: 'kotlin-kapt'
+
 android {
     namespace 'io.issc.kotlin_basics'
     compileSdk 33
@@ -32,6 +34,10 @@ android {
     }
 
     viewBinding {
+        enabled=true
+    }
+
+    dataBinding {
         enabled=true
     }
 }
