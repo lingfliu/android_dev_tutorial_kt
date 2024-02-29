@@ -28,13 +28,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+//        val binding = ActivityMainBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
 
-        binding.obj.x = 1
-        binding.txt.OnClickListener = View.OnClickListener {
-            Log.d("interface test", "click")
-        }
+//        binding.obj.x = 1
+//        binding.txt.OnClickListener = View.OnClickListener {
+//            Log.d("interface test", "click")
+//        }
 
 
         //3 循环 控制
