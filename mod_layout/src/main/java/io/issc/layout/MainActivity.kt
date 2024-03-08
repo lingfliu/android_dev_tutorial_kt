@@ -2,6 +2,7 @@ package io.issc.layout
 
 import android.app.ActivityManager
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+//        setContentView(R.layout.activity_layout_constraint)
+//        var btn = this.findViewById<Button>(R.id.btn)
+//        var btn_reset = this.findViewById<Button>(R.id.btn_reset)
+
         binding = ActivityLayoutConstraintBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -28,6 +33,12 @@ class MainActivity : ComponentActivity() {
         binding.btn.setOnClickListener {
             clickCount.add()
         }
+
+
+
+//        binding.btn.setOnClickListener {
+//            clickCount.add()
+//        }
 
     }
 }
