@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() {
 
         //9 协程
         GlobalScope.launch {
+            delay(100)
             var x : Int = 1 //有初始化时Int可省略
 
             val xUnmutableList = List(10) { i -> i + 1 }
