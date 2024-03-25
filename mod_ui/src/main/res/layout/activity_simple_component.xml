@@ -109,20 +109,25 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
+                    android:max="200"
+                    android:progress="100"
                     />
                 <ProgressBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:id="@+id/progressbar"
+                    style="?android:attr/progressBarStyleHorizontal"
                     app:layout_constraintTop_toBottomOf="@+id/seekbar"
                     />
 
                 <RatingBar
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/progressbar"
-                    android:rating="0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:rating="2"
                     android:stepSize="1"
                     android:numStars="5"
                     android:id="@+id/rate"
@@ -134,6 +139,14 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     android:id="@+id/clock"/>
+                <CalendarView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/clock"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:id="@+id/calendar"
+                    />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

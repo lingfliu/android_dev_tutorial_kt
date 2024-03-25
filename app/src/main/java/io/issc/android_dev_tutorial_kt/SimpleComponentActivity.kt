@@ -1,5 +1,6 @@
 package io.issc.android_dev_tutorial_kt
 
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -42,6 +43,21 @@ class SimpleComponentActivity : AppCompatActivity() {
             clickCount.cnt = (clickCount.cnt.toInt()+1).toString()
         }
 
+//        var imgData = ByteArray(10000)
+//        img.setImageBitmap(BitmapFactory.decodeByteArray(imgData, 0, imgData.size))
+
+        binding.checkbox.setOnClickListener {
+            if (it.isActivated) {
+            }
+        }
+
+        binding.toggle.setOnClickListener {
+            if (it.isActivated){
+
+            }
+        }
+
+
         seekBar.setOnSeekBarChangeListener(object:OnSeekBarChangeListener{
             override fun onProgressChanged(v: SeekBar?, p: Int, fromUser: Boolean) {
 //                Log.d("simple", progress.toString())
@@ -70,7 +86,6 @@ class SimpleComponentActivity : AppCompatActivity() {
 
         binding.radios.setOnCheckedChangeListener(object :OnCheckedChangeListener{
             override fun onCheckedChanged(p0: RadioGroup?, id: Int) {
-//                TODO("Not yet implemented")
                 if (id == R.id.radio_1) {
                     Log.d("simple", "selected option 1")
                 }

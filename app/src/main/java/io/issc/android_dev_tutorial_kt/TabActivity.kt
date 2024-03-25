@@ -16,13 +16,14 @@ import com.google.android.material.tabs.TabLayoutMediator
 import io.issc.android_dev_tutorial_kt.databinding.ActivityMainBinding
 import io.issc.android_dev_tutorial_kt.databinding.ActivityPagerBinding
 import io.issc.android_dev_tutorial_kt.databinding.ActivitySimpleComponentBinding
+import io.issc.android_dev_tutorial_kt.databinding.ActivityTabBinding
 import kotlinx.coroutines.delay
 import java.util.concurrent.Future
 import kotlin.random.Random
 
 
-class PagerActivity : FragmentActivity() {
-    lateinit var binding: ActivityPagerBinding
+class TabActivity : FragmentActivity() {
+    lateinit var binding: ActivityTabBinding
     var clickCount = ClickCount(1)
     lateinit var pager : ViewPager2
     lateinit var tab: TabLayout
@@ -30,13 +31,13 @@ class PagerActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPagerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.clickCount = clickCount
+//        binding = ActivityPagerBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
+//        binding.clickCount = clickCount
 
-        tab = binding.tabs
+//        tab = binding.tabs
 
-        pager = binding.pager
+//        pager = binding.pager
 
 //        pager.registerOnPageChangeCallback(object: OnPageChangeCallback() {
 //            override fun onPageSelected(position: Int) {
@@ -44,64 +45,40 @@ class PagerActivity : FragmentActivity() {
 //            }
 //        })
 
-        pager.adapter = object:FragmentStateAdapter(this) {
-            override fun getItemCount(): Int {
-                return 3
+        pager.adapter = object : FragmentStateAdapter(this) {
+           override fun getItemCount(): Int {
+               return 3
             }
-
             override fun createFragment(position: Int): Fragment {
                 if (position == 0) {
-                    val frag = FragmentP1()
+                    var frag = FragmentP1()
                     frag.cb = object:FragmentP1.Callback{
                         override fun onRequestPage3() {
                             pager.currentItem = 2
                         }
                     }
                     return frag
-                } else if(position == 1) {
+                }
+                else if (position == 1) {
                     return FragmentP2()
-                } else if(position == 2) {
+                }
+                else if (position == 2) {
                     return FragmentP3()
-                } else {
+                }
+                else {
                     return FragmentP1()
                 }
             }
         }
 
-//        pager.adapter = object : FragmentStateAdapter(this) {
-//           override fun getItemCount(): Int {
-//               return 3
-//            }
-//            override fun createFragment(position: Int): Fragment {
-//                if (position == 0) {
-//                    var frag = FragmentP1()
-//                    frag.cb = object:FragmentP1.Callback{
-//                        override fun onRequestPage3() {
-//                            pager.currentItem = 2
-//                        }
-//                    }
-//                    return frag
-//                }
-//                else if (position == 1) {
-//                    return FragmentP2()
-//                }
-//                else if (position == 2) {
-//                    return FragmentP3()
-//                }
-//                else {
-//                    return FragmentP1()
-//                }
-//            }
-//        }
-
-        pager.currentItem = 1
+        pager.currentItem = 2
 
         for (i in 1..3) {
-            tab.addTab(tab.newTab())
+            tab.addTab(tab.newTab().setText(i.toString()))
         }
 
         TabLayoutMediator(tab, pager) { tab, position ->
-            tab.text = tabNames[position]
+            tab.text = tabNames.get(position)
         }.attach()
     }
 

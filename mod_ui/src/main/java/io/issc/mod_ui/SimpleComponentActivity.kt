@@ -1,11 +1,12 @@
 package io.issc.mod_ui
 
-import android.app.Activity
+import android.app.SearchManager.OnCancelListener
 import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.CalendarView
+import android.widget.CalendarView.OnDateChangeListener
 import android.widget.ImageView
 import android.widget.RadioGroup
 import android.widget.RadioGroup.OnCheckedChangeListener
@@ -14,9 +15,9 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.chip.ChipGroup
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import io.issc.mod_ui.databinding.ActivitySimpleComponentBinding
 import java.util.concurrent.Future
 
@@ -30,6 +31,8 @@ class SimpleComponentActivity : AppCompatActivity() {
 
     val taskResultList = ArrayList<Future<Any>>()
 
+    var selectedBtnIdx = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySimpleComponentBinding.inflate(layoutInflater)
@@ -41,18 +44,23 @@ class SimpleComponentActivity : AppCompatActivity() {
         seekBar = binding.seekbar
 
         btn.setOnClickListener {
-            Toast.makeText(this, "测试信息", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "测试信息", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "snack", Snackbar.LENGTH_SHORT).show()
         }
-        
+
         binding.btnReset.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle("跳转确认")
                 .setMessage("确认跳转么？")
+                .setOnCancelListener ( object : DialogInterface.OnCancelListener {
+                    override fun onCancel(p0: DialogInterface?) {
+                    }
+                })
                 .setNegativeButton("取消", { dialogInterface, i ->
-                    dialogInterface.dismiss()
+//                    dialogInterface.dismiss()
                 })
                 .setPositiveButton("确认", { dialogInterface, i ->
-                    dialogInterface.dismiss()
+//                    dialogInterface.dismiss()
                 })
                 .create().show()
         }
@@ -68,6 +76,19 @@ class SimpleComponentActivity : AppCompatActivity() {
 
             override fun onStopTrackingTouch(v: SeekBar?) {
 //                TODO("Not yet implemented")
+                var p = v?.progress
+
+            }
+        })
+
+        binding.rate.setOnRatingBarChangeListener(object : RatingBar.OnRatingBarChangeListener{
+            override fun onRatingChanged(p0: RatingBar?, rating: Float, fromUser: Boolean) {
+                rating
+            }
+        })
+
+        binding.calendar.setOnDateChangeListener(object : OnDateChangeListener{
+            override fun onSelectedDayChange(var1: CalendarView, year: Int, month: Int, monthDay: Int) {
             }
         })
 
@@ -94,6 +115,7 @@ class SimpleComponentActivity : AppCompatActivity() {
                 }
             }
         })
+
 
 //        binding.rate.setOnRatingBarChangeListener(object: RatingBar.OnRatingBarChangeListener)
     }
