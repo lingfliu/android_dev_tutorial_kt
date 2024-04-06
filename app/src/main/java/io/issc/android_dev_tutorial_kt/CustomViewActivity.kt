@@ -10,8 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.view.animation.AnimationSet
+import android.view.animation.BounceInterpolator
 import android.view.animation.RotateAnimation
 import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
@@ -49,6 +52,8 @@ class CustomViewActivity : AppCompatActivity() {
 
     val coroutineTester = CoroutineTester()
 
+    var progress = 0.0f
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomViewBinding.inflate(layoutInflater)
@@ -60,18 +65,29 @@ class CustomViewActivity : AppCompatActivity() {
 //        iconTextView.config("TITLE", androidx.core.R.drawable.ic_call_answer_video)
 
 
-//        var ani1 = ScaleAnimation(1.0f, 2.0f, 1.0f, 3.0f)
+        var ani1 = ScaleAnimation(1.0f, 2.0f, 1.0f, 2.0f)
+//        ani1.duration = 1000
+//        ani1.repeatCount = 10
+//        ani1.repeatMode = Animation.REVERSE
+//        ani1.startOffset = 100
+//        val anix = AlphaAnimation(0.1f,1.1f)
+//        RotateAnimation(0.0f, 180.0f, 0.5f, 0.5f)
+//        TranslateAnimation(0.0f,1.0f,0.0f,1.0f)
+//        iconTextView.startAnimation(ani1)
+
 //        var ani2 = RotateAnimation(0.0f, 180.0f, 0.5f, 0.5f)
-////        ani.duration = 1000
-////        ani.repeatCount = 1
-//
+//        ani.duration = 1000
+//        ani.repeatCount = 1
+
 //        var aniSet = AnimationSet(true)
 //        aniSet.addAnimation(ani1)
 //        aniSet.addAnimation(ani2)
-//
+
 //        aniSet.duration = 1000
 //        aniSet.repeatCount = 2
-//
+
+//        aniSet.interpolator = BounceInterpolator()
+
 //        iconTextView.setOnClickListener{
 //            iconTextView.startAnimation(aniSet)
 //        }
@@ -87,12 +103,16 @@ class CustomViewActivity : AppCompatActivity() {
 //        }
 
         //arcview animation demo by ObjectAnimator
-//        arcView = binding.arc
-//        anime = ObjectAnimator.ofFloat(arcView, "endAngle", 0.0f, 270.0f)
-//        anime.duration = 1200
-//        anime.repeatCount = 10
-//        anime.repeatMode = ObjectAnimator.RESTART
-//        anime.start()
+        arcView = binding.arc
+//        arcView.setOnClickListener{
+//            anime = ObjectAnimator.ofFloat(arcView, "endAngle", progress, progress+20.0f)
+//            anime.duration = 600
+//            anime.repeatCount = 0
+//            anime.repeatMode = ObjectAnimator.RESTART
+//            anime.start()
+//            progress += 20.0f
+//        }
+
 //        iconTextView.setOnClickListener{
 //            coroutineTester.submit{
 //                for (i in 0..12) {

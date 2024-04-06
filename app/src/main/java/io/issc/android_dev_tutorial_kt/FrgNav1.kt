@@ -1,5 +1,6 @@
 package io.issc.android_dev_tutorial_kt
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,16 @@ class FrgNav1 : BaseFragment() {
     lateinit var btn1:Button
     lateinit var btn2:Button
     lateinit var btn3:Button
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        signature = "FrgNav1"
+        arguments?.let {
+            val cnt = it.getInt("cnt")
+            Toast.makeText(context, "cnt = $cnt", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +54,12 @@ class FrgNav1 : BaseFragment() {
         btn3.setOnClickListener{
             val controller = findNavController()
             controller.navigate(R.id.action_frgNav1_to_frgNav3)}
+
+        //提取传递的数据
+        arguments?.let {
+            val cnt = it.getInt("cnt")
+            Toast.makeText(context, "cnt = $cnt", Toast.LENGTH_SHORT).show()
+        }
 
         return binding.root
     }

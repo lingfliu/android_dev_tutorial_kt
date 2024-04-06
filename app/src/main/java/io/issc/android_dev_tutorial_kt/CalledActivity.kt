@@ -24,6 +24,9 @@ import java.util.concurrent.Future
 import kotlin.random.Random
 
 
+/**
+ * 被调用的Activity
+ */
 class CalledActivity : AppCompatActivity() {
     lateinit var binding: ActivityCalledBinding
 
