@@ -44,6 +44,8 @@ import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.client.utils.EmptyContent.headers
 import io.ktor.http.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.util.concurrent.Future
@@ -78,34 +80,35 @@ class IoActivity : AppCompatActivity() {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_DENIED) {
                 requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
             }
-//
+            else {
+                Log.i("ioacti", "permission granted")
+            }
+
+////
 //            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_DENIED) {
 //                requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
 //            }
 
             //file r/w demo
-            applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.absolutePath
             val extDir = applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)?.absolutePath
             val file = File(extDir, "test3.json")
             if (!file.exists()) {
                 file.createNewFile()
             }
             file.writeBytes("test 1234".toByteArray())
+            file.writeText("test 1234", Charsets.UTF_8)
             val str = file.readLines()[0]
             Log.d("ioacti", ""+str)
         }
 
 
         //preferences demo
-        var preferences = getSharedPreferences("io.issc.android_dev_tutorial_kt", MODE_PRIVATE)
+        val preferences = getSharedPreferences("io.issc.android_dev_tutorial_kt", MODE_PRIVATE)
 
         val isFirstOpen = preferences.getBoolean("isFirstOpen", true)
         if (isFirstOpen) {
             preferences.edit().putBoolean("isFirstOpen", false).apply()
         }
-
-        preferences.edit().putString("title", "Io Demo App").apply()
-        preferences.edit().putString("info", "Sharedpreference").apply()
 
         //room demo
         val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "user_info")
@@ -114,13 +117,18 @@ class IoActivity : AppCompatActivity() {
             .build()
         val userInfoDao = db.userInfoDao()
 
-        Thread({
+        MainScope().launch {
             userInfoDao.save(UserInfo(null, "admin", "admin", "admin"))
             userInfoDao.update(UserInfo(1, "admin", "admin", "admin"))
-            val uinfo = userInfoDao.findByName("admin")
-            Log.d("IoActivity", "user info: " + uinfo.name)
-        }).start()
 
+            val uinfo = userInfoDao.findByName("admin")
+            userInfoDao.deleteById(uinfo.id!!)
+
+            Log.d("IoActivity", "user info: " + uinfo.name)
+        }.start()
+//        Thread({
+//
+//        }).start()
 
     }
 }

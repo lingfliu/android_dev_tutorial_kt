@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
@@ -33,12 +34,8 @@ class NaviActivity : FragmentActivity() {
         binding = ActivityNaviBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var navController = findNavController(R.id.nav_host_fragment)
-        navController.navInflater.inflate(R.navigation.nav_graph).apply {
-        }
-
         binding.btnFrg1.setOnClickListener{
-            val fragment = binding.navHostFragment.getFragment<BaseFragment>()
+            val fragment = binding.navHostFragment.getFragment<Fragment>() as BaseFragment
             val controller = fragment.findNavController()
             var bundle = Bundle()
             bundle.putInt("cnt", cnt)
@@ -51,7 +48,7 @@ class NaviActivity : FragmentActivity() {
                 controller.navigate(R.id.action_frgNav3_to_frgNav1, bundle)
             }
         }
-
+//
         binding.btnFrg2.setOnClickListener{
             val fragment = binding.navHostFragment.getFragment<Fragment>() as BaseFragment
             val controller = fragment.findNavController()
@@ -64,7 +61,7 @@ class NaviActivity : FragmentActivity() {
                 controller.navigate(R.id.action_frgNav3_to_frgNav2)
             }
         }
-
+//
         binding.btnFrg3.setOnClickListener{
             val fragment = binding.navHostFragment.getFragment<BaseFragment>()
             val controller = fragment.findNavController()
@@ -86,11 +83,18 @@ class NaviActivity : FragmentActivity() {
 //                Toast.makeText(this, "cnt = $data", Toast.LENGTH_SHORT).show()
 //            }
 //        }
+//
 ////        //新的页面启动并返回结果使用示例
 //        binding.btnFrg1.setOnClickListener {
 //            var intent = Intent(this, CalledActivity::class.java)
 //            intent.putExtra("cnt", cnt)
 //            caller.launch(intent)
+//
+////            var bundle = bundleOf("cnt" to cnt, "key" to "Hello from NaviActivity")
+//
+////            intent.putExtra("bundle", bundle)
+//
+////            startActivity(intent, bundle)
 ////            startActivity(intent)
 ////            startActivityForResult(intent, 1)
 //        }
@@ -99,8 +103,8 @@ class NaviActivity : FragmentActivity() {
 
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 //        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == 1){}
-//        else if (requestCode == 2) {}
+////        if (requestCode == 1){}
+////        else if (requestCode == 2) {}
 ////        ...
 //
 //        if (requestCode == 1 && resultCode == 1) {

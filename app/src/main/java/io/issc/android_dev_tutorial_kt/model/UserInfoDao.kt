@@ -1,6 +1,7 @@
 package io.issc.android_dev_tutorial_kt.model
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -24,4 +25,11 @@ interface UserInfoDao {
 
     @Update
     fun update(user:UserInfo)
+
+
+    @Delete
+    fun delete(user:UserInfo)
+
+    @Query("DELETE FROM user_info WHERE id = :id")
+    fun deleteById(id:Long)
 }

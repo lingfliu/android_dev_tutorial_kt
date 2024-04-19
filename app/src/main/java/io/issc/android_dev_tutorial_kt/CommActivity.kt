@@ -21,9 +21,12 @@ import io.ktor.client.engine.android.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.*
+import io.ktor.client.utils.EmptyContent.headers
 import kotlinx.coroutines.*
+import java.io.PrintWriter
 import java.net.Socket
 import java.util.*
+import java.util.concurrent.Executors
 
 
 /**
@@ -49,10 +52,53 @@ class CommActivity : AppCompatActivity() {
         setContentView(binding.root)
         btn = binding.btn
 
+//        Executors.newCachedThreadPool().execute {
+//            val httpClient = HttpClient(Android)
+//            val paramName = "tn"
+//            val paramValue = "78040160_1_dg"
+//            val response = httpClient.get<String>("https://www.baidu.com/?$paramName=$paramValue")
+//            Log.d("ioacti", response)
+//        }
+//
+
 //        Thread{
 //            //TODO
 //            val a = 0
 //        }.start()
+
+        runBlocking {
+            val httpClient = HttpClient(Android)
+            val paramName = "tn"
+            val paramValue = "78040160_1_dg"
+            val response = httpClient.get<String>("https://www.baidu.com/?$paramName=$paramValue")
+            Log.d("ioacti", response)
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            val httpClient = HttpClient(Android)
+            val paramName = "tn"
+            val paramValue = "78040160_1_dg"
+            val response = httpClient.get<String>("https://www.baidu.com/?$paramName=$paramValue")
+            Log.d("ioacti", response)
+            runOnUiThread{
+                //TODO 在这里执行UI组件刷新
+//                img.src = response
+            }
+        }
+
+        MainScope().launch {
+            val httpClient = HttpClient(Android)
+            val response = httpClient.get<String>("https://www.baidu.com")
+            httpClient.post<String>("https://www.baidu.com"){
+                body = "hello"
+            }
+        }
+        GlobalScope.launch {
+            //TODO download the main page from www.zhihu.com
+            val httpClient = HttpClient(Android)
+            val response = httpClient.get<String>("https://www.zhihu.com")
+            Log.d("ioacti", response)
+        }
+
 
 //        //runblocking 协程启动
 //        runBlocking {
@@ -79,16 +125,23 @@ class CommActivity : AppCompatActivity() {
 //            }
 
             //get请求demo
-//            runBlocking {
-//                HttpClient(Android).use {
-//                    val response = it.get<String>("https://www.baidu.com")
-//                    Log.d("ioacti", response)
-//                }
-//            }
+            CoroutineScope(Dispatchers.IO).launch {
+                HttpClient(Android).use {
+                    val response = it.get<String>("https://www.baidu.com")
+                    Log.d("ioacti", response)
+                }
+            }
+
+            runBlocking {
+                HttpClient(Android).use {
+                    val response = it.get<String>("https://www.baidu.com")
+                    Log.d("ioacti", response)
+                }
+            }
 
             //restful get 请求demo
-//            coroutineTester.submit(object: CoroutineTester.Task {
-//                override suspend fun run() {
+            coroutineTester.submit(object: CoroutineTester.Task {
+                override suspend fun run() {
 //                    HttpClient(Android) {
 //                        install(JsonFeature) {
 //                            serializer = GsonSerializer {
@@ -96,33 +149,48 @@ class CommActivity : AppCompatActivity() {
 //                                disableHtmlEscaping()
 //                            }
 //                        }
-//                    }
-//                        .use {
-//                            val response =
-//                                it.get<MessageBundle<List<ProjectInfo>>>("http://plaf.kingroad.com:8059/api/pdb/project/info/all")
-//                            Log.d("ioacti", response.message.toString())
+//                    }.use {
+//                        val response = it.get<MessageBundle<List<ProjectInfo>>>("http://plaf.kingroad.com:8059/api/pdb/project/info/all"){
+//                            header("Authorization", "auth123")
 //                        }
-//                }
-//            })
-
-//            coroutineTester.submit(object: CoroutineTester.Task {
-//                override suspend fun run() {
-//                    HttpClient(Android).use {
-//                        val response = it.get<String>("https://www.baidu.com")
-//                        Log.d("ioacti", response)
+//                        Log.d("ioacti", response.message.toString())
 //                    }
-//                }
-//            })
 
-//            coroutineTester.submit(object: CoroutineTester.Task {
-//
-//                override suspend fun run() {
-//                            HttpClient(Android).use {
-//                                val response = it.get<String>("https://www.baidu.com")
-//                                Log.d("ioacti", response)
-//                            }
-//                }
-//            })
+
+                    HttpClient(Android) {
+                        install(JsonFeature) {
+                            serializer = GsonSerializer {
+                                serializeNulls()
+                                disableHtmlEscaping()
+                            }
+                        }
+                    }
+                        .use {
+                            val response =
+                                it.get<MessageBundle<List<ProjectInfo>>>("http://plaf.kingroad.com:8059/api/pdb/project/info/all")
+                            Log.d("ioacti", response.message.toString())
+                        }
+                }
+            })
+
+            coroutineTester.submit(object: CoroutineTester.Task {
+                override suspend fun run() {
+                    HttpClient(Android).use {
+                        val response = it.get<String>("https://www.baidu.com")
+                        Log.d("ioacti", response)
+                    }
+                }
+            })
+
+            coroutineTester.submit(object: CoroutineTester.Task {
+
+                override suspend fun run() {
+                            HttpClient(Android).use {
+                                val response = it.get<String>("https://www.baidu.com")
+                                Log.d("ioacti", response)
+                            }
+                }
+            })
 
 //            CoroutineScope(Dispatchers.IO).launch {
 //            }
@@ -153,7 +221,8 @@ class CommActivity : AppCompatActivity() {
 
         }
 
-        //蓝牙demo
+
+        //蓝牙 BLE demo
         val bluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         val bAdapter = bluetoothManager.adapter
         if (ActivityCompat.checkSelfPermission(
@@ -186,7 +255,16 @@ class CommActivity : AppCompatActivity() {
                     return
                 }
                 else {
-                    device?.name?.let { Log.i("ioacti", it) }
+                    //bluetooth socket demo
+                    bSocket = device?.createRfcommSocketToServiceRecord(uuid)
+                    bSocket?.connect()
+                    val bs = bSocket?.inputStream?.readBytes()
+                    val output = PrintWriter(bSocket?.outputStream)
+                    output.println("hello from android")
+                    output.flush()
+                    bSocket?.close()
+
+//                    device?.name?.let { Log.i("ioacti", it) }
                     device?.connectGatt(this@CommActivity, false, object : BluetoothGattCallback() {
                         override fun onConnectionStateChange(
                             gatt: BluetoothGatt?,
@@ -260,11 +338,16 @@ class CommActivity : AppCompatActivity() {
 //                    val socket = Socket("localhost", 9009) //
 //                    val socket = Socket("127.0.0.1", 9009) //
                     socket.soTimeout = 10000
-//                    socket.connect(socket.remoteSocketAddress, 10000)
-//                    val bytes = socket.getInputStream().readBytes()
-//                    val receiveMessage = bytes.toString()
-//                    Log.i("commacti", receiveMessage)
+                    socket.keepAlive = true
+                    socket.tcpNoDelay = true
+
+                    socket.connect(socket.remoteSocketAddress, 10000)
+                    val bytes = socket.getInputStream().readBytes()
+                    val receiveMessage = bytes.toString()
+                    Log.i("commacti", receiveMessage)
+
                     socket.getOutputStream().write("hello from android".toByteArray())
+
                     socket.close()
                 }
             }
