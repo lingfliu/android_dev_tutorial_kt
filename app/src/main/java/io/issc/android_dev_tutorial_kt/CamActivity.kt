@@ -83,7 +83,7 @@ class CamActivity : AppCompatActivity() {
             .build()
         val imageAnalysis = ImageAnalysis.Builder()
             .build()
-        var cameraSelector = CameraSelector.Builder()
+        val cameraSelector = CameraSelector.Builder()
             .requireLensFacing(CameraSelector.LENS_FACING_FRONT )
             .build()
         preview.setSurfaceProvider(viewFinder.surfaceProvider)

@@ -44,44 +44,64 @@ class PagerActivity : FragmentActivity() {
 //            }
 //        })
 
-        pager.adapter = object : FragmentStateAdapter(this) {
-           override fun getItemCount(): Int {
-               return 3
+        pager.adapter = object:FragmentStateAdapter(this) {
+            override fun getItemCount(): Int {
+                return 3
             }
+
             override fun createFragment(position: Int): Fragment {
                 if (position == 0) {
-                    var frag = FragmentP1()
+                    val frag = FragmentP1()
                     frag.cb = object:FragmentP1.Callback{
                         override fun onRequestPage3() {
-
-
-
-//                            pager.currentItem = 2
+                            pager.currentItem = 2
                         }
-
                     }
                     return frag
-                }
-                else if (position == 1) {
+                } else if(position == 1) {
                     return FragmentP2()
-                }
-                else if (position == 2) {
+                } else if(position == 2) {
                     return FragmentP3()
-                }
-                else {
+                } else {
                     return FragmentP1()
                 }
             }
         }
 
-        pager.currentItem = 2
+//        pager.adapter = object : FragmentStateAdapter(this) {
+//           override fun getItemCount(): Int {
+//               return 3
+//            }
+//            override fun createFragment(position: Int): Fragment {
+//                if (position == 0) {
+//                    var frag = FragmentP1()
+//                    frag.cb = object:FragmentP1.Callback{
+//                        override fun onRequestPage3() {
+//                            pager.currentItem = 2
+//                        }
+//                    }
+//                    return frag
+//                }
+//                else if (position == 1) {
+//                    return FragmentP2()
+//                }
+//                else if (position == 2) {
+//                    return FragmentP3()
+//                }
+//                else {
+//                    return FragmentP1()
+//                }
+//            }
+//        }
+
+        pager.currentItem = 1
 
         for (i in 1..3) {
-            tab.addTab(tab.newTab().setText(i.toString()))
+            tab.addTab(tab.newTab())
         }
 
         TabLayoutMediator(tab, pager) { tab, position ->
-            tab.text = tabNames.get(position)
+            tab.text = tabNames[position]
         }.attach()
     }
 

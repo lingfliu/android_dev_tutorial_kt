@@ -1,4 +1,4 @@
-package com.example.mod_ui
+package io.issc.mod_ui
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.example.mod_ui
+package io.issc.mod_ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.mod_ui.ui.theme.Android_dev_tutorial_ktTheme
+import io.issc.mod_ui.ui.theme.Android_dev_tutorial_ktTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

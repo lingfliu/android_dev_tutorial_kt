@@ -33,5 +33,4 @@ class FragmentP1 : Fragment() {
         }
         return binding.root
     }
-
 }

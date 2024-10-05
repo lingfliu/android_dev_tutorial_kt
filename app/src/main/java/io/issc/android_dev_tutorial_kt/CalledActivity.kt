@@ -24,6 +24,9 @@ import java.util.concurrent.Future
 import kotlin.random.Random
 
 
+/**
+ * 被调用的Activity
+ */
 class CalledActivity : AppCompatActivity() {
     lateinit var binding: ActivityCalledBinding
 
@@ -34,14 +37,23 @@ class CalledActivity : AppCompatActivity() {
         binding = ActivityCalledBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var cnt = intent.getIntExtra("cnt", 0)
-        Toast.makeText(this, "cnt = $cnt", Toast.LENGTH_SHORT).show()
+        intent.extras?.let {
+            val cnt = it.getInt("cnt")
+            Toast.makeText(this, "cnt = $cnt", Toast.LENGTH_SHORT).show()
+        }
+
+//        var cnt = intent.getIntExtra("cnt", 0)
+//        Toast.makeText(this, "cnt = $cnt", Toast.LENGTH_SHORT).show()
 
         btnBack = binding.btnBack
 
+        //get request code
+//        var requestCode = intent.getIntExtra("requestCode", 0)
+
         btnBack.setOnClickListener{
             var intent = Intent()
-            intent.putExtra("cnt", cnt+10)
+            intent.putExtra("cnt", 10)
+
             setResult(1, intent)
 
 

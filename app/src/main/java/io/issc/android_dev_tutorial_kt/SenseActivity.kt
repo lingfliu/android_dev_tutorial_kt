@@ -11,6 +11,8 @@ import android.hardware.Sensor.*
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.media.AudioManager
+import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -56,6 +58,8 @@ class SenseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //必须在onCreate中调用，否则权限请求会被忽略
+        requestPermissions(arrayOf(android.Manifest.permission.HIGH_SAMPLING_RATE_SENSORS), 0)
         binding = ActivitySenseBinding.inflate(layoutInflater)
         setContentView(binding.root)
         btn = binding.btnToCam
@@ -69,13 +73,13 @@ class SenseActivity : AppCompatActivity() {
 
         sensorMgr.registerListener(object:SensorEventListener{
             override fun onSensorChanged(event: SensorEvent?) {
-                Log.i("senseacti", "value " + event?.values?.get(0).toString())
+                Log.i("senseacti", "value " + event?.values?.get(0).toString()  + " at " + event?.timestamp.toString())
             }
 
             override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
                 Log.i("senseacti", "acc changed " + p1.toString())
             }
-        }, accSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        }, accSensor, SensorManager.SENSOR_DELAY_UI)
 //
 //        sensorMgr.registerListener(object:SensorEventListener{
 //            override fun onSensorChanged(event: SensorEvent?) {
@@ -92,6 +96,36 @@ class SenseActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
 
         btn.text = "拍照"
+
+        btn.setOnClickListener{
+            //start audio recording
+
+            val audioMgr = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+            audioMgr.setMode(AudioManager.MODE_IN_COMMUNICATION)
+            audioMgr.setSpeakerphoneOn(true)
+
+            val recorder = MediaRecorder()
+
+            recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            val path = "${externalCacheDir?.absolutePath}/audio.3gp"
+            recorder.setOutputFile(path)
+
+            recorder.prepare()
+            recorder.start()
+            Toast.makeText(this, "Recording started", Toast.LENGTH_SHORT).show()
+
+            recorder.stop()
+            recorder.release()
+
+            recorder.setOnInfoListener(object:MediaRecorder.OnInfoListener{
+                override fun onInfo(p0: MediaRecorder?, p1: Int, p2: Int) {
+                    Log.i("senseacti", "info " + p1.toString())
+                }
+            })
+        }
 
         val caller = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
