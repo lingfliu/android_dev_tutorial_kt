@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,6 +16,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -105,9 +107,15 @@ fun WaterfallImageGallery(
 }
 
 @Composable
-fun WaterfallGalleryDemoScreen(modifier: Modifier = Modifier) {
+fun WaterfallGalleryDemoScreen(
+    modifier: Modifier = Modifier,
+    pendingCapturedPhotoUri: String? = null,
+    onCapturedPhotoShown: () -> Unit = {},
+    onOpenCamera: () -> Unit = {},
+) {
     val images = remember { mutableStateListOf<GalleryImage>() }
     var page by remember { mutableIntStateOf(0) }
+    var nextLocalImageId by remember { mutableIntStateOf(-1) }
     var isLoading by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
@@ -135,12 +143,35 @@ fun WaterfallGalleryDemoScreen(modifier: Modifier = Modifier) {
         loadNextPage()
     }
 
-    Column(modifier = modifier.fillMaxSize()) {
-        Text(
-            text = "Waterfall Gallery",
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
+    LaunchedEffect(pendingCapturedPhotoUri) {
+        val localUri = pendingCapturedPhotoUri ?: return@LaunchedEffect
+        images.add(
+            index = 0,
+            element = GalleryImage(
+                id = nextLocalImageId--,
+                url = localUri,
+                heightDp = 220,
+            ),
         )
+        onCapturedPhotoShown()
+    }
+
+    Column(modifier = modifier.fillMaxSize()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = "Waterfall Gallery",
+                style = MaterialTheme.typography.titleLarge,
+            )
+            Button(onClick = onOpenCamera) {
+                Text(text = "Take Photo")
+            }
+        }
 
         WaterfallImageGallery(
             images = images,
