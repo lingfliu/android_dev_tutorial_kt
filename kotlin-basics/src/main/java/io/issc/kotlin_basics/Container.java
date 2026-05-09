@@ -68,7 +68,7 @@ public class Container {
         List<Object> info = new LinkedList<>();
         info.add("String");
         info.add(1);
-        info.add(new BaseType(1, "aa"));
+        info.add(new BaseType("aa", 1));
 
         for (Object i : info) {
             String className = i.getClass().getName();
