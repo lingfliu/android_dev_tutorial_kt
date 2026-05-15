@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CalcButton" parent="android:Widget.Material.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">1dp</item>
+    </style>
+
+    <style name="CalcButton.Number" parent="CalcButton">
+        <item name="android:backgroundTint">@color/btn_number</item>
+        <item name="android:textColor">@color/btn_number_text</item>
+    </style>
+
+    <style name="CalcButton.Operator" parent="CalcButton">
+        <item name="android:backgroundTint">@color/btn_operator</item>
+        <item name="android:textColor">@color/btn_operator_text</item>
+    </style>
+
+    <style name="CalcButton.Action" parent="CalcButton">
+        <item name="android:backgroundTint">@color/btn_action</item>
+        <item name="android:textColor">@color/btn_action_text</item>
+    </style>
+
+    <style name="CalcButton.Equals" parent="CalcButton">
+        <item name="android:backgroundTint">@color/btn_equals</item>
+        <item name="android:textColor">@color/btn_equals_text</item>
+    </style>
+</resources>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.CompoundButton
 import android.widget.TextView
 import io.issc.android_dev_tutorial_kt.databinding.ActivityMainBinding
 import java.util.concurrent.Future
@@ -25,11 +26,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         txt = binding.txt
         btn = binding.btn
+        val btn_reset = binding.btnReset
+
+        btn_reset.setOnClickListener{
+
+        }
+
+        binding.toggleButton.setOnCheckedChangeListener(object: CompoundButton.OnCheckedChangeListener{
+            override fun onCheckedChanged(btn:CompoundButton, changed: Boolean) {
+            }
+        })
+
+
         binding.clickCount = clickCount
 
-        btn.setOnClickListener {
-            clickCount.cnt = (clickCount.cnt.toInt()+1).toString()
+        btn_reset.setOnClickListener{
+            val cnt = 0
+            clickCount.cnt = cnt.toString()
         }
+
+//        btn.setOnClickListener {
+//            clickCount.cnt = (clickCount.cnt.toInt()+1).toString()
+//        }
 
     }
 }

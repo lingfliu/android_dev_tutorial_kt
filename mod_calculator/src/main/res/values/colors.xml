@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="display_bg">#FF1A1A1A</color>
+    <color name="display_text">#FFFFFFFF</color>
+    <color name="display_expr">#FFAAAAAA</color>
+    <color name="btn_number">#FF333333</color>
+    <color name="btn_number_text">#FFFFFFFF</color>
+    <color name="btn_operator">#FFFF9800</color>
+    <color name="btn_operator_text">#FFFFFFFF</color>
+    <color name="btn_action">#FF555555</color>
+    <color name="btn_action_text">#FFFFFFFF</color>
+    <color name="btn_equals">#FFFF9800</color>
+    <color name="btn_equals_text">#FFFFFFFF</color>
+    <color name="btn_divider">#FF444444</color>
+</resources>

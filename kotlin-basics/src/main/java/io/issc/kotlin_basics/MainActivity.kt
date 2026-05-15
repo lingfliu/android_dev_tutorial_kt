@@ -10,12 +10,15 @@ import io.issc.kotlin_basics.databinding.ActivityMainBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.*
 import java.lang.System.currentTimeMillis
+import java.util.concurrent.Callable
+import java.util.concurrent.Future
 
 class MainActivity : AppCompatActivity() {
     /*kotlin 基础代码示例*/
     // controlling examples
 
     //1 自动推导变量
+    val a = "const value"
     var x = 1
     val y = 2
     
@@ -25,9 +28,14 @@ class MainActivity : AppCompatActivity() {
     //2 可空变量
     var str:String?= "hello"
 
+    //10 委托
+    interface Greeter { fun greet(name: String): String }
+    class GreeterImpl : Greeter { override fun greet(name: String) = "hello $name" }
+    class GreeterDelegate(delegate: Greeter) : Greeter by delegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
 //        val binding = ActivityMainBinding.inflate(layoutInflater)
 //        setContentView(binding.root)
@@ -76,7 +84,11 @@ class MainActivity : AppCompatActivity() {
         var lambda = { x: Int, y: Int -> x + y }
         lambda(1, 2).let { Log.d("lambda test", it.toString()) }
     
-        //9 协程
+        //9 委托类调用
+        val greeter = GreeterDelegate(GreeterImpl())
+        Log.d("delegate test", greeter.greet("kotlin"))
+
+        //10 协程
         GlobalScope.launch {
             delay(100)
             var x : Int = 1 //有初始化时Int可省略
@@ -113,9 +125,9 @@ class MainActivity : AppCompatActivity() {
 //
         //lambda 表达式
         var txt = findViewById<View>(R.id.txt)
-        txt.setOnClickListener(View.OnClickListener {
+        txt.setOnClickListener {
             Log.d("interface test", "click")
-        })
+        }
 //
 //        //Handler 示例 Message传输
 //        txt.setOnClickListener({
@@ -133,31 +145,35 @@ class MainActivity : AppCompatActivity() {
 //            coroutineTester.submit({ Log.i("suspend test", "${i}".format(i)) })
 //        }
 //
-//        //协程flow示例
-//        coroutineTester.flowTest()
+//        //协程 flow map 示例
+//        coroutineTester.flowMapTest()
+//
+//        //协程演示：结构化并发、async/await、取消、超时
+//        CoroutineDemo.runAll()
 //
 //        //协程flow map示例
 //        coroutineTester.flowMapTest()
 //
-//        //线程池示例
-//        for (i in 1..10) {
-//            threadPool.submit({
-//                Log.d("thread test", i.toString())
-//            })
-//        }
-//
-//        //callable 线程池示例
-//        val futureList = ArrayList<Future<Any>>()
-//        for (i in 1..10) {
-//            futureList.add(threadPool.submit(Callable{
-//                Log.d("callable submit" ,i.toString())
-//                i
-//            })
-//            )
-//        }
-//
-//        for (future in futureList) {
-//            Log.d("callable result", future.get().toString())
-//        }
+        val threadPool = ThreadPool.getInstance()
+        //线程池示例
+        for (i in 1..10) {
+            threadPool.submit({
+                Log.d("thread test", i.toString())
+            })
+        }
+
+        //callable 线程池示例
+        val futureList = ArrayList<Future<Any>>()
+        for (i in 1..10) {
+            futureList.add(threadPool.submit(Callable{
+                Log.d("callable submit" ,i.toString())
+                i
+            })
+            )
+        }
+
+        for (future in futureList) {
+            Log.d("callable result", future.get().toString())
+        }
     }
 }

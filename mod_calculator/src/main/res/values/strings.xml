@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">mod_calculator</string>
+    <string name="error_divide_by_zero">除数不能为零</string>
+    <string name="error_expression">表达式无效</string>
+</resources>

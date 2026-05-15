@@ -40,7 +40,11 @@
 
         <activity android:name=".SimpleComponentActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".PagerActivity"
@@ -70,6 +74,7 @@
             android:name=".MainActivity"
             android:exported="true">
 
+
         </activity>
 
         <activity android:name=".CalledActivity"
@@ -89,11 +94,6 @@
 
         <activity android:name=".SenseActivity" android:exported="true">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name=".CamActivity" android:exported="true">
